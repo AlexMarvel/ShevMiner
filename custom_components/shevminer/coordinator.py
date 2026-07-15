@@ -30,15 +30,16 @@ class ShevMinerCoordinator(DataUpdateCoordinator[dict[str, Any]]):
             port=entry_data.get("port", DEFAULT_PORT),
             api_key=entry_data.get(CONF_API_KEY),
         )
-        password = entry_data.get(CONF_PASSWORD)
-        if password:
-            try:
-                self.client.unlock(password)
-            except XMinerError:
-                _LOGGER.warning("Failed to unlock miner with password")
+        self._password = entry_data.get(CONF_PASSWORD)
 
     async def _async_update_data(self) -> dict[str, Any]:
         """Fetch data from the miner."""
+        if self._password and not self.client._token:
+            try:
+                await self.hass.async_add_executor_job(self.client.unlock, self._password)
+            except XMinerError:
+                _LOGGER.warning("Failed to unlock miner with password")
+
         data: dict[str, Any] = {}
         try:
             data["info"] = await self.hass.async_add_executor_job(self.client.get_info)
