@@ -87,17 +87,20 @@ class XMinerClient:
         if json_body is not None and files is None:
             headers["Content-Type"] = "application/json"
 
-        resp = requests.request(
-            method=method,
-            url=url,
-            headers=headers,
-            json=json_body if json_body is not None and files is None else None,
-            params=params,
-            files=files,
-            data=data,
-            timeout=self.timeout,
-            verify=self.verify_ssl,
-        )
+        try:
+            resp = requests.request(
+                method=method,
+                url=url,
+                headers=headers,
+                json=json_body if json_body is not None and files is None else None,
+                params=params,
+                files=files,
+                data=data,
+                timeout=self.timeout,
+                verify=self.verify_ssl,
+            )
+        except requests.exceptions.RequestException as exc:
+            raise XMinerError(str(exc)) from exc
 
         if resp.status_code >= 400:
             try:
