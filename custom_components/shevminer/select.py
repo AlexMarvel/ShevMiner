@@ -20,7 +20,7 @@ _LOGGER = logging.getLogger(__name__)
 class ShevMinerPresetSelect(ShevMinerEntity, SelectEntity):
     """Select entity for autotune presets."""
 
-    _attr_translation_key = "preset"
+    _attr_name = "Autotune Preset"
     _attr_entity_category = EntityCategory.CONFIG
 
     def __init__(self, coordinator: ShevMinerCoordinator, entry_id: str) -> None:

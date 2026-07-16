@@ -28,13 +28,13 @@ class ShevMinerButton(ShevMinerEntity, ButtonEntity):
         coordinator: ShevMinerCoordinator,
         entry_id: str,
         key: str,
-        translation_key: str,
+        name: str,
         action: Callable[[], None],
     ) -> None:
         """Initialize the button."""
         super().__init__(coordinator, entry_id)
         self._attr_unique_id = f"{entry_id}_{key}"
-        self._attr_translation_key = translation_key
+        self._attr_name = name
         self._action = action
 
     async def async_press(self) -> None:
@@ -59,25 +59,25 @@ async def async_setup_entry(
         ShevMinerButton(
             coordinator, entry.entry_id,
             key="mining_restart",
-            translation_key="mining_restart",
+            name="Restart Mining",
             action=client.mining_restart,
         ),
         ShevMinerButton(
             coordinator, entry.entry_id,
             key="mining_pause",
-            translation_key="mining_pause",
+            name="Pause Mining",
             action=client.mining_pause,
         ),
         ShevMinerButton(
             coordinator, entry.entry_id,
             key="mining_resume",
-            translation_key="mining_resume",
+            name="Resume Mining",
             action=client.mining_resume,
         ),
         ShevMinerButton(
             coordinator, entry.entry_id,
             key="reboot_miner",
-            translation_key="reboot_miner",
+            name="Reboot Miner",
             action=client.system_reboot,
         ),
     ])
