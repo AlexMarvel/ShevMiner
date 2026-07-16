@@ -34,23 +34,26 @@ MAIN_SENSORS: list[ShevMinerSensorDescription] = [
     ShevMinerSensorDescription(
         key="hashrate_realtime",
         translation_key="hashrate_realtime",
-        native_unit_of_measurement="GH/s",
+        native_unit_of_measurement="TH/s",
         state_class=SensorStateClass.MEASUREMENT,
-        value_fn=lambda data: _get_miner(data, "hr_realtime"),
+        suggested_display_precision=0,
+        value_fn=lambda data: _gh_to_th(_get_miner(data, "hr_realtime")),
     ),
     ShevMinerSensorDescription(
         key="hashrate_average",
         translation_key="hashrate_average",
-        native_unit_of_measurement="GH/s",
+        native_unit_of_measurement="TH/s",
         state_class=SensorStateClass.MEASUREMENT,
-        value_fn=lambda data: _get_miner(data, "hr_average"),
+        suggested_display_precision=0,
+        value_fn=lambda data: _gh_to_th(_get_miner(data, "hr_average")),
     ),
     ShevMinerSensorDescription(
         key="hashrate_nominal",
         translation_key="hashrate_nominal",
-        native_unit_of_measurement="GH/s",
+        native_unit_of_measurement="TH/s",
         state_class=SensorStateClass.MEASUREMENT,
-        value_fn=lambda data: _get_miner(data, "hr_nominal"),
+        suggested_display_precision=0,
+        value_fn=lambda data: _gh_to_th(_get_miner(data, "hr_nominal")),
     ),
     ShevMinerSensorDescription(
         key="power_consumption",
@@ -65,6 +68,7 @@ MAIN_SENSORS: list[ShevMinerSensorDescription] = [
         translation_key="power_efficiency",
         native_unit_of_measurement="J/TH",
         state_class=SensorStateClass.MEASUREMENT,
+        suggested_display_precision=0,
         value_fn=lambda data: _get_miner(data, "power_efficiency"),
     ),
     ShevMinerSensorDescription(
@@ -115,6 +119,12 @@ MAIN_SENSORS: list[ShevMinerSensorDescription] = [
         value_fn=lambda data: _get_status(data, "miner_state"),
     ),
 ]
+
+
+def _gh_to_th(value: Any) -> Any:
+    if value is None:
+        return None
+    return round(value / 1000)
 
 
 def _get_miner(data: dict[str, Any], attr: str) -> Any:
