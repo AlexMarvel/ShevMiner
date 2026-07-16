@@ -1,75 +1,99 @@
 # ShevMiner — Home Assistant Integration
 
-HACS custom integration for controlling Antminer / Vnish mining devices via the xminer-api.
+[![hacs_badge](https://img.shields.io/badge/HACS-Default-41BDF5.svg)](https://github.com/hacs/integration)
 
-## Installation
+Моніторинг та управління майнерами Antminer з прошивкою **VNISH** через Home Assistant.
+Інтеграція дозволяє відстежувати хешрейт, температуру, споживання енергії, керувати майнінгом та автоматизувати роботу майнера через автоматизації Home Assistant.
 
-### Via HACS
+## Сумісність
 
-1. Add this repository as a custom repository in HACS (type: **Integration**)
-2. Click **Install** on "ShevMiner"
-3. Restart Home Assistant
-4. Go to **Settings → Devices & Services → Add Integration**
-5. Search for "ShevMiner" and follow the config flow
+- **Прошивка:** VNISH (AnthillOS)
+- **Протестовано на версіях:** 1.3.3, 1.3.5
+- **Протестовано на пристроях:** Antminer S19j Pro, Antminer S19
+- **Підтримка мов:** English, Українська
 
-### Manual
+> Потрібна підтримка нових моделей? Створіть [issue](https://github.com/AlexMarvel/miner-api/issues) із вказівкою моделі та версії прошивки.
 
-1. Copy the `custom_components/shevminer/` folder to your Home Assistant `custom_components/` directory
-2. Restart Home Assistant
-3. Go to **Settings → Devices & Services → Add Integration**
-4. Search for "ShevMiner"
+## Можливості
 
-## Configuration
+- Моніторинг хешрейту (реальний, середній, номінальний) у TH/s
+- Температура чіпів та плати
+- Споживання енергії та енергоефективність
+- Швидкість вентиляторів та duty cycle
+- Статистика пулів (accepted / rejected / stale)
+- Керування майнінгом (старт / стоп / пауза / резюме / перезапуск)
+- Вибір пресету автотюну
+- Перезавантаження майнера
+- Автоматизації через Home Assistant
 
-The integration is configured via the UI (config flow). You will need:
+## Встановлення
 
-- **Host / IP** — the miner's IP address (e.g. `192.168.1.147`)
-- **Port** — usually `80`
-- **Password** — web UI password for the miner (Vnish firmware)
-- **API Key** — alternative to password (32-character key); leave empty if using password
+### Через HACS
 
-## Entities
+1. Додайте цей репозиторій як кастомний у HACS (тип: **Integration**)
+2. Натисніть **Install** на "ShevMiner"
+3. Перезапустіть Home Assistant
+4. Перейдіть у **Settings → Devices & Services → Add Integration**
+5. Знайдіть "ShevMiner" і дотримуйтесь інструкцій
 
-### Sensors
+### Вручну
 
-| Sensor | Unit | Description |
-|--------|------|-------------|
-| Hashrate Realtime | GH/s | Instant hashrate |
-| Hashrate Average | GH/s | Average hashrate |
-| Hashrate Nominal | GH/s | Nominal/target hashrate |
-| Power Consumption | W | Power draw |
-| Power Efficiency | J/TH | Joules per terahash |
-| Hardware Errors | count | Total HW errors |
-| HW Errors Percent | % | Error percentage |
-| Chip Temperature | °C | Max chip temperature |
-| PCB Temperature | °C | Max PCB temperature |
-| Fan Duty | % | Fan duty cycle |
-| Restart Count | count | Total restarts |
-| Miner State | — | Current state (mining/stopped/...) |
-| Fan N RPM | RPM | Per-fan RPM |
-| Pool N Accepted/Rejected/Stale/Status | — | Per-pool statistics |
+1. Скопіюйте папку `custom_components/shevminer/` у ваш `custom_components/` каталог Home Assistant
+2. Перезапустіть Home Assistant
+3. Перейдіть у **Settings → Devices & Services → Add Integration**
+4. Знайдіть "ShevMiner"
 
-### Switch
+## Налаштування
 
-- **Mining** — Start / Stop mining
+Інтеграція налаштовується через UI. Потрібно вказати:
 
-### Select
+- **Host / IP** — IP-адреса майнера (напр. `192.168.1.147`)
+- **Port** — зазвичай `80`
+- **Password** — пароль від веб-інтерфейсу майнера (Vnish firmware)
+- **API Key** — альтернатива паролю (32-символьний ключ); залиште порожнім, якщо використовуєте пароль
 
-- **Autotune Preset** — Select and apply an autotune preset
+## Сутності
 
-### Buttons
+### Сенсори
 
-- **Restart Mining** — Restart the mining process
-- **Pause Mining** — Pause mining
-- **Resume Mining** — Resume mining
-- **Reboot Miner** — Reboot the miner device
+| Сенсор | Одиниця | Опис |
+|--------|---------|------|
+| Хешрейт у реальному часі | TH/s | Миттєвий хешрейт |
+| Середній хешрейт | TH/s | Середній хешрейт |
+| Номінальний хешрейт | TH/s | Номінальний/цільовий хешрейт |
+| Споживання енергії | W | Споживана потужність |
+| Енергоефективність | J/TH | Джоулі на терахеш |
+| Помилки обладнання | count | Загальна кількість помилок |
+| Відсоток помилок | % | Відсоток помилок |
+| Температура чіпів | °C | Максимальна температура чіпів |
+| Температура плати | °C | Максимальна температура плати |
+| Швидкість вентиляторів | % | Duty cycle вентиляторів |
+| Кількість перезавантажень | count | Загальна кількість перезавантажень |
+| Стан майнера | — | Поточний стан (mining/stopped/...) |
+| Вентилятор N об/хв | RPM | Оберти кожного вентилятора |
+| Пул N Accepted/Rejected/Stale/Status | — | Статистика по пулам |
 
-## Data Update
+### Перемикач
 
-The integration polls the miner every 10 seconds by default.
+- **Майнінг** — Старт / Стоп майнінгу
 
-## Requirements
+### Селект
 
-- Home Assistant 2024.1.0 or newer
-- HACS (for one-click install)
-- Miner running Vnish/Anthill firmware with accessible API
+- **Пресет автотюну** — Вибір та застосування пресету автотюну
+
+### Кнопки
+
+- **Перезапустити майнінг** — Перезапуск процесу майнінгу
+- **Призупинити майнінг** — Пауза майнінгу
+- **Відновити майнінг** — Відновлення майнінгу
+- **Перезавантажити майнер** — Перезавантаження пристрою майнера
+
+## Оновлення даних
+
+Інтеграція опитує майнер кожні 10 секунд.
+
+## Вимоги
+
+- Home Assistant 2024.1.0 або новіше
+- HACS (для встановлення в один клік)
+- Майнер з прошивкою VNISH та доступним API
