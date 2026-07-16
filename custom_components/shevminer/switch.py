@@ -20,7 +20,7 @@ _LOGGER = logging.getLogger(__name__)
 class ShevMinerMiningSwitch(ShevMinerEntity, SwitchEntity):
     """Switch to control mining on/off."""
 
-    _attr_name = "Mining"
+    _attr_translation_key = "mining"
     _attr_entity_category = EntityCategory.CONFIG
 
     def __init__(self, coordinator: ShevMinerCoordinator, entry_id: str) -> None:
