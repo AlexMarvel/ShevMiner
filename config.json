@@ -1,8 +1,0 @@
-{
-  "miner_host": "192.168.1.147",
-  "miner_port": 80,
-  "miner_password": "admin",
-  "miner_api_key": null,
-  "server_host": "0.0.0.0",
-  "server_port": 8000
-}
