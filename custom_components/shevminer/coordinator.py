@@ -67,6 +67,11 @@ class ShevMinerCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         except XMinerError as exc:
             _LOGGER.debug("Error fetching perf summary: %s", exc)
 
+        try:
+            data["settings"] = await self.hass.async_add_executor_job(self.client.get_settings)
+        except XMinerError as exc:
+            _LOGGER.debug("Error fetching settings: %s", exc)
+
         if not data.get("info") and not data.get("status") and not data.get("summary"):
             raise UpdateFailed("Miner is not reachable")
 

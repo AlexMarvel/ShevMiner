@@ -37,10 +37,28 @@ class ShevMinerPresetSelect(ShevMinerEntity, SelectEntity):
     @property
     def current_option(self) -> str | None:
         """Return the current preset."""
-        if self.coordinator.data:
-            perf = self.coordinator.data.get("perf")
-            if perf and perf.current_preset:
-                return perf.current_preset.name
+        if not self.coordinator.data:
+            return None
+
+        perf = self.coordinator.data.get("perf")
+        if perf and perf.current_preset:
+            return perf.current_preset.name
+
+        settings = self.coordinator.data.get("settings")
+        if settings:
+            try:
+                preset = settings["miner"]["overclock"]["preset"]
+                if preset:
+                    return preset
+            except (KeyError, TypeError):
+                pass
+
+        presets = self.coordinator.data.get("presets")
+        if presets:
+            for preset in presets:
+                if preset.status in ("active", "running", "current"):
+                    return preset.name
+
         return None
 
     async def async_select_option(self, option: str) -> None:
