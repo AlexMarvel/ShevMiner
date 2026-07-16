@@ -221,8 +221,7 @@ class ShevMinerFanSensor(ShevMinerEntity, SensorEntity):
         super().__init__(coordinator, entry_id)
         self._fan_index = fan_index
         self._attr_unique_id = f"{entry_id}_fan_{fan_index}_rpm"
-        self._attr_translation_key = "fan_rpm"
-        self._attr_translation_placeholders = {"index": str(fan_index)}
+        self._attr_name = f"Fan {fan_index} RPM"
         self._attr_native_unit_of_measurement = "RPM"
         self._attr_state_class = SensorStateClass.MEASUREMENT
 
@@ -255,8 +254,8 @@ class ShevMinerPoolSensor(ShevMinerEntity, SensorEntity):
         self._pool_id = pool_id
         self._stat_type = stat_type
         self._attr_unique_id = f"{entry_id}_pool_{pool_id}_{stat_type}"
-        self._attr_translation_key = f"pool_{stat_type}"
-        self._attr_translation_placeholders = {"pool_id": str(pool_id)}
+        stat_label = stat_type.capitalize()
+        self._attr_name = f"Pool {pool_id} {stat_label}"
 
         if stat_type == "accepted" or stat_type == "rejected" or stat_type == "stale":
             self._attr_state_class = SensorStateClass.TOTAL_INCREASING

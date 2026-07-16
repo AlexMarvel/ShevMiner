@@ -6,6 +6,7 @@ import logging
 from homeassistant.components.select import SelectEntity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
+from homeassistant.helpers.entity import EntityCategory
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from .const import DOMAIN
@@ -20,6 +21,7 @@ class ShevMinerPresetSelect(ShevMinerEntity, SelectEntity):
     """Select entity for autotune presets."""
 
     _attr_translation_key = "preset"
+    _attr_entity_category = EntityCategory.CONFIG
 
     def __init__(self, coordinator: ShevMinerCoordinator, entry_id: str) -> None:
         """Initialize the select."""

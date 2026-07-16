@@ -7,6 +7,7 @@ from collections.abc import Callable, Awaitable
 from homeassistant.components.button import ButtonEntity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
+from homeassistant.helpers.entity import EntityCategory
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from .const import DOMAIN
@@ -19,6 +20,8 @@ _LOGGER = logging.getLogger(__name__)
 
 class ShevMinerButton(ShevMinerEntity, ButtonEntity):
     """Button entity for ShevMiner actions."""
+
+    _attr_entity_category = EntityCategory.CONFIG
 
     def __init__(
         self,
