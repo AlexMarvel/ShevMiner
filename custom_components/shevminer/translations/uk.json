@@ -1,0 +1,103 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Підключення до ShevMiner",
+        "description": "Введіть дані для підключення до майнера.",
+        "data": {
+          "host": "Хост / IP-адреса",
+          "port": "Порт",
+          "password": "Пароль (пароль від веб-інтерфейсу)",
+          "api_key": "API-ключ (альтернатива паролю, залиште порожнім якщо використовуєте пароль)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Не вдалося підключитися до майнера. Перевірте хост та порт.",
+      "auth_failed": "Помилка автентифікації. Перевірте пароль або API-ключ.",
+      "unknown": "Сталася невідома помилка."
+    },
+    "abort": {
+      "already_configured": "Цей майнер вже налаштований."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "hashrate_realtime": {
+        "name": "Хешрейт у реальному часі"
+      },
+      "hashrate_average": {
+        "name": "Середній хешрейт"
+      },
+      "hashrate_nominal": {
+        "name": "Номінальний хешрейт"
+      },
+      "power_consumption": {
+        "name": "Споживання енергії"
+      },
+      "power_efficiency": {
+        "name": "Енергоефективність"
+      },
+      "hw_errors": {
+        "name": "Помилки обладнання"
+      },
+      "hw_errors_percent": {
+        "name": "Відсоток помилок"
+      },
+      "chip_temp": {
+        "name": "Температура чіпів"
+      },
+      "pcb_temp": {
+        "name": "Температура плати"
+      },
+      "fan_duty": {
+        "name": "Швидкість вентиляторів"
+      },
+      "restart_count": {
+        "name": "Кількість перезавантажень"
+      },
+      "miner_state": {
+        "name": "Стан майнера"
+      },
+      "fan_rpm": {
+        "name": "Вентилятор {index} об/хв"
+      },
+      "pool_accepted": {
+        "name": "Пул {pool_id} прийнято"
+      },
+      "pool_rejected": {
+        "name": "Пул {pool_id} відхилено"
+      },
+      "pool_stale": {
+        "name": "Пул {pool_id} застарілі"
+      },
+      "pool_status": {
+        "name": "Пул {pool_id} статус"
+      }
+    },
+    "switch": {
+      "mining": {
+        "name": "Майнінг"
+      }
+    },
+    "select": {
+      "preset": {
+        "name": "Пресет автотюну"
+      }
+    },
+    "button": {
+      "mining_restart": {
+        "name": "Перезапустити майнінг"
+      },
+      "mining_pause": {
+        "name": "Призупинити майнінг"
+      },
+      "mining_resume": {
+        "name": "Відновити майнінг"
+      },
+      "reboot_miner": {
+        "name": "Перезавантажити майнер"
+      }
+    }
+  }
+}
